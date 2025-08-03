@@ -3,10 +3,7 @@ from tkinter import ttk
 import pymongo
 import datetime
 from tkinter.messagebox import showerror,showinfo,showwarning
-client=pymongo.MongoClient("mongodb://localhost:27017/") 
-print(client)
-db=client["PythonPart2"]
-coll=db["HotelUserDetails"]
+# DataBase Setup
 class HotelM:
     def __init__(self,root):
         self.actualTotal=IntVar()
@@ -542,3 +539,4 @@ if __name__=="__main__":
     obj=HotelM(root)
 
     root.mainloop()
+
