@@ -1,15 +1,8 @@
 from tkinter import *
 from tkinter import ttk
-#import mysql.connector
 import pymongo
 import datetime
 from tkinter.messagebox import showerror,showinfo,showwarning
-# db=mysql.connector.connect(host="localhost",user="root",passwd="divyashaktI510@",database="pythonpart2")
-# cur=db.cursor()
-# print("\nDataBase Connected Successfully")
-# cur.execute("use pythonpart2")
-# cur.execute("create table if not exists HotelCustomerDetails(BookingId int primary key,RoomNo int not null unique,Username varchar(30) not null,PhoneNumber varchar(10) not null,Gender varchar(10) not null,RoomType varchar(10) not null,Meal varchar(10) not null,TotalDays int not null,Person int not null,BookDate date not null,BookTime time not null)")
-# print("Table Created")
 client=pymongo.MongoClient("mongodb://localhost:27017/") 
 print(client)
 db=client["PythonPart2"]
@@ -252,22 +245,7 @@ class HotelM:
             print("\nData Not Found")
             showwarning("Warning","Data Not Found")
             self.UpdatePage()
-
-        # print(self.UpadteByVal.get(),self.UpadteByval.get())
-        # cur.execute("select * from hotelcustomerdetails where {} = {}".format(self.UpadteByVal.get(),self.UpadteByval.get()))
-        # data=cur.fetchone()
-        # print(data)
-        # for i in data:
-        #     print(i)
-        # if(data!=None):
-        #     print("\nData Found")
-        #     showinfo("Info","Data Found")
-        #     self.UpdateData(data[0],data[1],data[2],data[3],data[4],data[5],data[6],data[7],data[8],data[9],data[10])
-        # else:
-        #     print("\nData Not Found")
-        #     showwarning("Warning","Data Not Found")
-        #     self.UpdatePage()
-
+ 
     def UpdateData(self,bookid,roomno,user,phone,gender,roomtype,meal,totaldays,person,date,time):
         CustomerDetailsLabelFrame=LabelFrame(self.Framedown,text="Customer Details",bd=4,relief="ridge",font=("Calibri",20))
         CustomerDetailsLabelFrame.place(x=20,y=130,height=490,width=1160) 
@@ -345,35 +323,11 @@ class HotelM:
         self.roomIdUpdt.set(roomno)
         self.totalDaysUpdt.set(totaldays)
         self.personUpdt.set(person)
-
-        # PaymentDetailsFrame=LabelFrame(CustomerDetailsLabelFrame,text="Payment Details",font=("Calibri",20),fg="red")
-        # PaymentDetailsFrame.place(x=630,y=100,height=380,width=500)
-
-        # ActualTotalLabel=Label(PaymentDetailsFrame,text="Room Total",font=("Calibri",20))
-        # ActualTotalLabel.place(x=30,y=40,height=30,width=150)
-        
-        # ActualTotalEntry=Entry(PaymentDetailsFrame,font=("Calibri",20),state=DISABLED,textvariable=self.actualTotal)
-        # ActualTotalEntry.place(x=230,y=40,height=35,width=200)
-
-        # TaxLabel=Label(PaymentDetailsFrame,text="Tax Total",font=("Calibri",20))
-        # TaxLabel.place(x=30,y=120,height=30,width=128)
-
-        # TaxEntry=Entry(PaymentDetailsFrame,font=("Calibri",20),state=DISABLED,textvariable=self.taxTotal)
-        # TaxEntry.place(x=230,y=120,height=35,width=200)
-
-        # TotalLabel=Label(PaymentDetailsFrame,text="Total",font=("Calibri",20),fg="red")
-        # TotalLabel.place(x=30,y=200,height=30,width=90)
-
-        # TotalEntry=Entry(PaymentDetailsFrame,font=("Calibri",20),fg="red",state=DISABLED,textvariable=self.total)
-        # TotalEntry.place(x=230,y=200,height=35,width=200)
-    
-
+ 
     def update(self):
         myquery = { "BookingId": self.UpadteByval.get() }
         newvalues = { "$set": { 'Username':self.usernameUpdt.get(),'PhoneNumber':self.phoneNumberUpdt.get() ,'Gender':self.genderUpdt.get() ,'RoomType':self.roomtypeUpdt.get()  ,'Meal':self.mealtypeUpdt.get() ,'TotalDays':self.totalDaysUpdt.get() ,'Person' :self.personUpdt.get()}}
         coll.update_one(myquery, newvalues)
-        # cur.execute("update hotelcustomerdetails set Username='{}',PhoneNumber='{}',Gender='{}',RoomType='{}' ,Meal='{}',TotalDays={},Person={} where {} = {} ".format(self.usernameUpdt.get(),self.phoneNumberUpdt.get(),self.genderUpdt.get(),self.roomtypeUpdt.get(),self.mealtypeUpdt.get(),self.totalDaysUpdt.get(),self.personUpdt.get(),self.UpadteByVal.get(),self.UpadteByval.get()))
-        # db.commit()
         print("\nUpdated Successfully")
         showinfo("Info","\nData Updated Successfully")
 
@@ -399,15 +353,11 @@ class HotelM:
 
     def search(self):
         print(self.SearchByVal.get(),self.SearchByval.get())
-        # cur.execute("select * from hotelcustomerdetails where {} = {}".format(self.SearchByVal.get(),self.SearchByval.get()))
-        # data=cur.fetchone()
-        # print(data)
         data=coll.find_one({'BookingId':self.SearchByval.get()})
         print(data)
         if(data!=None):
             print("\nData Found")
             showinfo("Info","Data Found")
-        #     self.SearchData(data[0],data[1],data[2],data[3],data[4],data[5],data[6],data[7],data[8],data[9],data[10])
             self.SearchData(data['BookingId'],data['RoomNo'],data['Username'],data['PhoneNumber'],data['Gender'],data['RoomType'],data['Meal'],data['TotalDays'],data['Person'],data['BookDate'],data['BookDate'])
         else:
             print("\nData Not Found")
@@ -501,28 +451,7 @@ class HotelM:
         self.personSearch.set(person)
         self.timeSearch.set(time)
         self.dateSearch.set(date)
-
-        # PaymentDetailsFrame=LabelFrame(CustomerDetailsLabelFrame,text="Payment Details",font=("Calibri",20),fg="red")
-        # PaymentDetailsFrame.place(x=630,y=310,height=380,width=500)
-
-        # ActualTotalLabel=Label(CustomerDetailsLabelFrame,text="Room Total",font=("Calibri",20))
-        # ActualTotalLabel.place(x=620,y=260,height=30,width=150)
-        
-        # ActualTotalEntry=Entry(CustomerDetailsLabelFrame,font=("Calibri",20),state=DISABLED,textvariable=self.actualTotal)
-        # ActualTotalEntry.place(x=230,y=40,height=35,width=200)
-
-        # TaxLabel=Label(CustomerDetailsLabelFrame,text="Tax Total",font=("Calibri",20))
-        # TaxLabel.place(x=620,y=260,height=30,width=128)
-
-        # TaxEntry=Entry(CustomerDetailsLabelFrame,font=("Calibri",20),state=DISABLED,textvariable=self.taxTotal)
-        # TaxEntry.place(x=230,y=120,height=35,width=200)
-
-        # TotalLabel=Label(CustomerDetailsLabelFrame,text="Total",font=("Calibri",20),fg="red")
-        # TotalLabel.place(x=620,y=260,height=30,width=90)
-
-        # TotalEntry=Entry(CustomerDetailsLabelFrame,font=("Calibri",20),fg="red",state=DISABLED,textvariable=self.total)
-        # TotalEntry.place(x=230,y=200,height=35,width=200)
-    
+ 
     def DeletePage(self):
         Frameup=Frame(self.FrameRight)
         Frameup.place(x=0,y=0,height=110,width=1190)
@@ -571,8 +500,6 @@ class HotelM:
         self.hotel_table=ttk.Treeview(Framedown,column=("bookid","roomno","username","phonenumber","gender","roomtype","meal","totaldays","person","date","time"),xscrollcommand=scroll_x.set,yscrollcommand=scroll_y.set)
         scroll_x.pack(side=BOTTOM,fill=X)
         scroll_y.pack(side=RIGHT,fill=Y)
-        # scroll_x=ttk.Scrollbar(command=self.hotel_table.xview)    
-        # scroll_y=ttk.Scrollbar(command=self.hotel_table.yview)
         scroll_x.config(command=self.hotel_table.xview)
         scroll_y.config(command=self.hotel_table.yview)
         self.hotel_table.heading("bookid",text="Book Id")
@@ -608,18 +535,10 @@ class HotelM:
             print(data)
             self.hotel_table.insert("",END,values=(data["BookingId"],data["RoomNo"],data['Username'],data['PhoneNumber'],data['Gender'],data['RoomType'],data['Meal'],data['TotalDays'],data['Person'],data["BookDate"],data["BookDate"]))
 
-        #     for i in datas:
-        #         self.hotel_table.insert("",END,values=i)
-        # cur.execute("select * from hotelcustomerdetails")
-        # datas=cur.fetchall()
-        # if(len(datas)!=0):
-        #     self.hotel_table.delete(*self.hotel_table.get_children())
-        #     for i in datas:
-        #         self.hotel_table.insert("",END,values=i)
-        #     db.commit()
-
+ 
 
 if __name__=="__main__":
     root=Tk()
     obj=HotelM(root)
+
     root.mainloop()
